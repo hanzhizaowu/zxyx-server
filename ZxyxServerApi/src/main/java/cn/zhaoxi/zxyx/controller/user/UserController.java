@@ -64,6 +64,21 @@ public class UserController extends BaseController {
         return userService.login(loginVo);
     }
 
+    @ApiOperation(value = "用户是否登录判断", notes = "用户登录判断接口", httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType="form", name = "userToken", value = "用户token", required = true)
+    })
+    @RequestMapping(value = "/islogin", method = RequestMethod.POST)
+    public Response isLogin(LoginVo loginVo) {
+        if (loginVo == null) {
+            return Response.paramIsNull();
+        }
+
+        logger.info("param is :" + loginVo.toString());
+
+        return userService.isLogin(loginVo);
+    }
+
     @ApiOperation(value = "密码重置", notes = "密码重置接口", httpMethod = "POST")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="form", name = "userMobile", value = "手机号", required = true),
@@ -83,32 +98,30 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "用户资料更改", notes = "用户资料更改接口", httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType="header", name = "userToken", value = "token", required = true),
+            @ApiImplicitParam(paramType="form", name = "userId", value = "用户Id", required = true),
             @ApiImplicitParam(paramType="form", name = "userMobile", value = "手机号"),
             @ApiImplicitParam(paramType="form", name = "userName", value = "用户名"),
             @ApiImplicitParam(paramType="form", name = "userPassword", value = "密码"),
             @ApiImplicitParam(paramType="form", name = "userSex", value = "性别，0未知，1女2男"),
-            @ApiImplicitParam(paramType="form", name = "userAvatar", value = "头像路径"),
             @ApiImplicitParam(paramType="form", name = "userSignature", value = "个性签名")
     })
-    @RequestMapping(value = "/userUpdate", method = RequestMethod.POST)
-    public Response updateUser(UserUpdateVo userUpdateVo, @ApiIgnore @RequestAttribute(name = "userId") Long userId) {
+    @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
+    public Response updateUser(UserUpdateVo userUpdateVo) {
         if (userUpdateVo == null) {
             return Response.paramIsNull();
         }
 
-        logger.info("userId is {}, param is {}", userId, userUpdateVo.toString());
+        logger.info("userId is {}, param is {}", userUpdateVo.toString());
 
-        return userService.updateUser(userUpdateVo, userId);
+        return userService.updateUser(userUpdateVo);
     }
 
     @ApiOperation(value = "用户信息查询", notes = "用户信息查询接口", httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType="header", name = "userToken", value = "token", required = true),
-            @ApiImplicitParam(paramType="form", name = "userId", value = "用户id")
+            @ApiImplicitParam(paramType="query", name = "userId", value = "用户id", dataType = "Long", required = true)
     })
-    @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
-    public Response getUser(@ApiIgnore @RequestAttribute(name = "userId") Long userId) {
+    @RequestMapping(value = "/info", method = RequestMethod.POST)
+    public Response getUser(@RequestParam(name = "userId") Long userId) {
         if (userId != null) {
             logger.info("param is :" + userId);
 

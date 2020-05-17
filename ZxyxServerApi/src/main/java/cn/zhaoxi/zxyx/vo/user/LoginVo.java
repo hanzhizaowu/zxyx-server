@@ -11,4 +11,5 @@ public class LoginVo implements Serializable {
     private static final long serialVersionUID = 4275087053214489123L;
     private String userName;
     private String userPassword;
+    private String userToken;
 }

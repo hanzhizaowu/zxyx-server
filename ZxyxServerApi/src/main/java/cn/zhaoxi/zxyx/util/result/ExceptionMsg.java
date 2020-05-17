@@ -15,7 +15,8 @@ public enum ExceptionMsg {
     MobileUsed(1009,"该手机号已被注册"),
     FileEmpty(1010,"上传文件为空"),
     LimitPictureSize(1011,"图片大小必须小于2M"),
-    LimitPictureType(1012,"图片格式必须为'jpg'、'png'、'jpge'、'gif'、'bmp'");
+    LimitPictureType(1012,"图片格式必须为'jpg'、'png'、'jpge'、'gif'、'bmp'"),
+    UnLogin(1013, "登录过期，请重新登录");
 
     private ExceptionMsg(Integer code, String msg) {
         this.code = code;

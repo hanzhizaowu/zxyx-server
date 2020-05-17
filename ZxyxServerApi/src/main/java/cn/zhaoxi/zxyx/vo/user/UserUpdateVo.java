@@ -1,10 +1,12 @@
 package cn.zhaoxi.zxyx.vo.user;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
 @Data
 @ToString
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UserUpdateVo {
 
     private String userName;
@@ -15,7 +17,7 @@ public class UserUpdateVo {
 
     private Integer userSex;
 
-    private String userAvatar;
-
     private String userSignature;
+
+    private Long userId;
 }

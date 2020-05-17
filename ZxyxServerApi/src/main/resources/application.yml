@@ -20,3 +20,7 @@ logging:
   file:
     path: /home/zxyx_project/log/
     name: photo.log
+
+# 此地址由nginx代理，即前端访问http://localhost/rss/ 指向 rss-path
+rss-path:
+  linuxPath: /home/ossfs/

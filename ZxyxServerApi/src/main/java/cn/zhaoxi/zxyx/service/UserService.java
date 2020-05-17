@@ -16,6 +16,8 @@ import cn.zhaoxi.zxyx.vo.user.UserVo;
 public interface UserService {
     Response login(LoginVo loginVo);
 
+    Response isLogin(LoginVo loginVo);
+
     Response register(RegisterVo registerVo);
 
     Response resetPassword(RegisterVo registerVo);
@@ -24,5 +26,5 @@ public interface UserService {
 
     TUser userInfo(Long userId);
 
-    Response updateUser(UserUpdateVo userUpdateVo, Long userId);
+    Response updateUser(UserUpdateVo userUpdateVo);
 }

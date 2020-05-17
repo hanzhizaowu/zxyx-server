@@ -63,7 +63,29 @@ public class UserServiceImpl implements UserService {
         UserVo userResult = new UserVo();
         userResult.setUserId(tUser.getUserId());
         userResult.setUserToken(tUser.getUserToken());
+        userResult.setUserName(tUser.getUserName());
         result.setData(userResult);
+
+        return result;
+    }
+
+    @Override
+    public Response isLogin(LoginVo loginVo) {
+        Response result = Response.success();
+
+        String userToken = loginVo.getUserToken();
+        if (StringUtils.isEmpty(userToken)) {
+            result.setResponse(ExceptionMsg.ParamIsNull);
+            return result;
+        }
+
+        TUser param = new TUser();
+        param.setUserToken(userToken);
+        TUser tUser = (TUser) tUserMapper.selectOne(param);
+        if (tUser == null) {
+            result.setResponse(ExceptionMsg.UnLogin);
+            return result;
+        }
 
         return result;
     }
@@ -118,6 +140,7 @@ public class UserServiceImpl implements UserService {
         UserVo userVo = new UserVo();
         userVo.setUserId(tUserToken.getUserId());
         userVo.setUserToken(tUserToken.getUserToken());
+        userVo.setUserName(tUserToken.getUserName());
         result.setData(userVo);
 
         return result;
@@ -172,7 +195,12 @@ public class UserServiceImpl implements UserService {
             return result;
         }
 
-        result.setData(tUser);
+        UserVo userVo = new UserVo();
+        userVo.setUserId(tUser.getUserId());
+        userVo.setUserName(tUser.getUserName());
+        userVo.setUserAvatar(tUser.getUserAvatar());
+        userVo.setUserSignature(tUser.getUserSignature());
+        result.setData(userVo);
         return result;
     }
 
@@ -182,13 +210,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response updateUser(UserUpdateVo userUpdateVo, Long userId) {
+    public Response updateUser(UserUpdateVo userUpdateVo) {
         Response result = Response.success();
 
-        String phone = userUpdateVo.getUserMobile();
-        String username = userUpdateVo.getUserName();
-        String password = userUpdateVo.getUserPassword();
-        if (StringUtils.isEmpty(phone) && StringUtils.isEmpty(username) && StringUtils.isEmpty(password)) {
+        Long userId = userUpdateVo.getUserId();
+        if (userId == null) {
             result.setResponse(ExceptionMsg.ParamIsNull);
             return result;
         }
@@ -197,7 +223,6 @@ public class UserServiceImpl implements UserService {
 
         // 切换数据
         BeanUtils.copyProperties(userUpdateVo, param);
-        param.setUserId(userId);
         tUserMapper.updateByPrimaryKeySelective(param);
 
         return result;

@@ -34,11 +34,20 @@ public class Response {
         msg = exMsg.getMsg();
     }
 
+    public void setCodeAndMsg(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public static Response success() {
         return new Response(ExceptionMsg.SUCCESS);
     }
 
     public static Response paramIsNull() {
         return new Response(ExceptionMsg.ParamIsNull);
+    }
+
+    public static Response paramIsError() {
+        return new Response(ExceptionMsg.ParamError);
     }
 }
