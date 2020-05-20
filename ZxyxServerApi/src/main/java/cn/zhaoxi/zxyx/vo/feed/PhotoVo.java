@@ -19,6 +19,8 @@ public class PhotoVo implements Serializable {
 
     private Integer photoType;
 
+    public PhotoVo() {}
+
     public void setUrl(String  url) {
         this.url = Constants.RSSURL + url;
     }

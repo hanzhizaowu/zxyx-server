@@ -41,6 +41,8 @@ public class FeedVo implements Serializable {
 
     private Integer feedType;
 
+    public FeedVo() {}
+
     public FeedVo(Feed feed) {
         this.feedId = feed.getFeedId();
         this.feedTitle = feed.getFeedTitle();
