@@ -34,7 +34,7 @@ public class RssConfig {
     /**
      * 动态图片目录
      */
-    public String getFeedPath() {
-        return "feed/";
+    public String getFeedImagePath() {
+        return "image/";
     }
 }

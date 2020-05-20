@@ -1,7 +1,7 @@
 package cn.zhaoxi.zxyx.controller.user;
 
 import cn.zhaoxi.zxyx.controller.BaseController;
-import cn.zhaoxi.zxyx.service.UserService;
+import cn.zhaoxi.zxyx.service.user.UserService;
 import cn.zhaoxi.zxyx.util.result.Response;
 import cn.zhaoxi.zxyx.vo.user.LoginVo;
 import cn.zhaoxi.zxyx.vo.user.RegisterVo;
@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = "01-user", value = "UserApi", description = "用户相关接口")
 @RestController

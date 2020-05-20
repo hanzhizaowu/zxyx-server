@@ -1,6 +1,7 @@
 package cn.zhaoxi.zxyx.vo.user;
 
 import cn.zhaoxi.zxyx.entity.user.TUser;
+import cn.zhaoxi.zxyx.model.User;
 import cn.zhaoxi.zxyx.util.Constants;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

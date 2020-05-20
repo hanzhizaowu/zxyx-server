@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhaoxi.zxyx.dao.FeedDao">
+  <!-- 动态部分 -->
+  <resultMap id="FeedMap" type="cn.zhaoxi.zxyx.model.Feed">
+    <id column="id" jdbcType="BIGINT" property="feedId" />
+    <result column="feedTitle" jdbcType="VARCHAR" property="feedTitle" />
+    <result column="feedDescription" jdbcType="VARCHAR" property="feedDescription" />
+    <result column="createTime" jdbcType="BIGINT" property="createTime" />
+    <result column="updateTime" jdbcType="BIGINT" property="updateTime" />
+      <result column="feedType" jdbcType="TINYINT" property="feedType" />
+    <!-- 用户信息 -->
+    <association column="userId" property="postUser" select="selectUserById"/>
+    <!-- 动态相册 -->
+    <collection column="id" property="photos" select="selectFeedPhoto"/>
+  </resultMap>
+  <!-- 分页 -->
+  <sql id="page_size">
+    <choose>
+      <when test="pageSize != null">
+        LIMIT #{pageSize}
+      </when>
+      <otherwise>
+        LIMIT 10
+      </otherwise>
+    </choose>
+  </sql>
+
+  <!-- 动态列表 -->
+  <select id="pageFeed" parameterType="map" resultMap="FeedMap">
+    SELECT f.id, f.feedTitle, f.feedDescription, f.userId, f.createTime, f.updateTime, f.feedType
+    FROM t_feed f
+    <where>
+      f.userId = #{userId}
+      <if test = "photoId gt 0">
+        and f.id > #{photoId}
+      </if>
+    </where>
+
+    ORDER BY f.createTime DESC
+    <include refid="page_size"/>
+  </select>
+
+  <!-- 帖子文件部分 -->
+  <resultMap id="PhotoMap" type="cn.zhaoxi.zxyx.model.Photo">
+    <id column="id" jdbcType="BIGINT" property="photoId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="photoType" jdbcType="TINYINT" property="photoType" />
+  </resultMap>
+
+  <select id="selectFeedPhoto" parameterType="Long" resultMap="PhotoMap">
+    SELECT id, url, photoType
+    FROM t_feed_photo
+    WHERE feedId = #{id}
+  </select>
+
+  <!-- 用户部分 -->
+  <resultMap id="UserMap" type="cn.zhaoxi.zxyx.model.User">
+    <id column="id" jdbcType="BIGINT" property="userId" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="avatar" jdbcType="VARCHAR" property="userAvatar" />
+    <result column="token" jdbcType="VARCHAR" property="userToken" />
+  </resultMap>
+  <!-- 通过id查找用户 -->
+  <select id="selectUserById" parameterType="Long" resultMap="UserMap">
+    select id, userName, avatar, token
+    from t_user
+    where id = #{id}
+  </select>
+
+</mapper>

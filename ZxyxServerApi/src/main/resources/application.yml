@@ -11,6 +11,11 @@
   application:
     name: zxyx
 
+mybatis:
+  type-aliases-package: cn.zhaoxi.zxyx.model
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
 server:
   port: 8080
 

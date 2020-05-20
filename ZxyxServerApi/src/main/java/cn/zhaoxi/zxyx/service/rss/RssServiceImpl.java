@@ -1,4 +1,4 @@
-package cn.zhaoxi.zxyx.service;
+package cn.zhaoxi.zxyx.service.rss;
 
 import cn.zhaoxi.zxyx.entity.user.TUser;
 import cn.zhaoxi.zxyx.mapper.TUserMapper;
@@ -51,7 +51,7 @@ public class RssServiceImpl implements RssService {
     @Override
     public Response uploadFeedImage(MultipartFile[] files) {
         String[] types = new String[]{".jpg", ".jpeg", ".webp", ".png", ".gif"};
-        return uploadFile(files, rssConfig.getFeedPath(), types);
+        return uploadFile(files, rssConfig.getFeedImagePath(), types);
     }
 
     /**

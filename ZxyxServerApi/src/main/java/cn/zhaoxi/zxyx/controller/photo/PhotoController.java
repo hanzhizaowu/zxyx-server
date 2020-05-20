@@ -1,7 +1,7 @@
 package cn.zhaoxi.zxyx.controller.photo;
 
 import cn.zhaoxi.zxyx.controller.BaseController;
-import cn.zhaoxi.zxyx.service.RssService;
+import cn.zhaoxi.zxyx.service.rss.RssService;
 import cn.zhaoxi.zxyx.util.result.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -51,11 +51,10 @@ public class PhotoController extends BaseController {
      */
     @ApiOperation(value = "动态图片上传", notes = "动态图片上传接口")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType="header", name = "X-App-Token", value = "token", required = true),
-            @ApiImplicitParam(paramType="form", name = "file", value = "图片文件 - 不可测试", required = true, dataType = "File", allowMultiple = true)
+            @ApiImplicitParam(paramType="form", name = "files", value = "图片文件 - 不可测试", required = true, dataType = "File", allowMultiple = true)
     })
     @RequestMapping(value = "/feed/image", method = RequestMethod.POST)
-    public Response uploadFeedbackImage(@RequestParam("file") MultipartFile[] files) {
+    public Response uploadFeedbackImage(@RequestParam("files") MultipartFile[] files) {
 
         if (files == null) {
             return Response.paramIsNull();

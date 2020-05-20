@@ -1,4 +1,4 @@
-package cn.zhaoxi.zxyx.service;
+package cn.zhaoxi.zxyx.service.rss;
 
 import cn.zhaoxi.zxyx.util.result.Response;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,7 +1,5 @@
 package cn.zhaoxi.zxyx.entity.user;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -9,16 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * 因为数据隐蔽性，需要在类上注解@JsonIgnoreProperties({"password"})
- */
-@JsonIgnoreProperties({ "userPassword"})
 @Table(name = "t_user")
 @Data
-public class TUser implements Serializable {
-
-    private static final long serialVersionUID = 5657099632669516425L;
-
+public class TUser {
     /**
      * 用户id
      */

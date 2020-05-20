@@ -1,4 +1,4 @@
-package cn.zhaoxi.zxyx.service;
+package cn.zhaoxi.zxyx.service.user;
 
 import cn.zhaoxi.zxyx.entity.user.TUser;
 import cn.zhaoxi.zxyx.util.result.Response;
