@@ -2,6 +2,7 @@ package cn.zhaoxi.zxyx.vo.feed;
 
 import cn.zhaoxi.zxyx.model.Feed;
 import cn.zhaoxi.zxyx.model.Photo;
+import cn.zhaoxi.zxyx.util.Constants;
 import cn.zhaoxi.zxyx.vo.user.UserVo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -41,6 +42,12 @@ public class FeedVo implements Serializable {
 
     private Integer feedType;
 
+    private String feedCover;
+
+    private Integer coverHeight;
+
+    private Integer coverWidth;
+
     public FeedVo() {}
 
     public FeedVo(Feed feed) {
@@ -50,19 +57,25 @@ public class FeedVo implements Serializable {
         this.createTime = feed.getCreateTime();
         this.updateTime = feed.getUpdateTime();
         this.feedType = feed.getFeedType();
+        this.feedCover = Constants.RSSURL + feed.getFeedCover();
+        this.coverHeight = feed.getCoverHeight();
+        this.coverWidth = feed.getCoverWidth();
 
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(feed.getPostUser(), userVo);
 
-        List<Photo> orgPhotos = feed.getPhotos();
-        List<PhotoVo> destPhotoVos = new ArrayList<>();
-        if(!Objects.isNull(orgPhotos)) {
-            orgPhotos.forEach(item ->{
-                PhotoVo photoVo = new PhotoVo();
-                BeanUtils.copyProperties(item, photoVo);
-                destPhotoVos.add(photoVo);
-            });
-            this.photos = destPhotoVos;
+        if(Objects.isNull(feed.getPhotos())) {
+            List<Photo> orgPhotos = feed.getPhotos();
+            List<PhotoVo> destPhotoVos = new ArrayList<>();
+            if(!Objects.isNull(orgPhotos)) {
+                orgPhotos.forEach(item ->{
+                    PhotoVo photoVo = new PhotoVo();
+                    BeanUtils.copyProperties(item, photoVo);
+                    photoVo.setAddUrl(item.getUrl());
+                    destPhotoVos.add(photoVo);
+                });
+                this.photos = destPhotoVos;
+            }
         }
     }
 }

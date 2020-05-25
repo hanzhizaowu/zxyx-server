@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@EnableScheduling
 @MapperScan(basePackages = {"cn.zhaoxi.zxyx.mapper", "cn.zhaoxi.zxyx.dao"})
 public class PhotoApplication {
 

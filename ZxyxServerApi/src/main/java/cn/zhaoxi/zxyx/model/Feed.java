@@ -24,4 +24,7 @@ public class Feed {
     private Long createTime;
     private Long updateTime;
     private Integer feedType;
+    private String feedCover;
+    private Integer coverHeight;
+    private Integer coverWidth;
 }

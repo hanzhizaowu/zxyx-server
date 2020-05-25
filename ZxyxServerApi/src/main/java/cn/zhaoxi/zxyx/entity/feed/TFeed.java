@@ -33,4 +33,13 @@ public class TFeed {
 
     @Column(name = "feedType")
     private Integer feedType;
+
+    @Column(name = "feedCover")
+    private String feedCover;
+
+    @Column(name = "coverHeight")
+    private Integer coverHeight;
+
+    @Column(name = "coverWidth")
+    private Integer coverWidth;
 }

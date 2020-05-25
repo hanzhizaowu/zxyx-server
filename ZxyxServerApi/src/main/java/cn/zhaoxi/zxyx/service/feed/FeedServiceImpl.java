@@ -64,7 +64,8 @@ public class FeedServiceImpl implements FeedService {
 
         String feedInfo = feedVo.getFeedTitle();
         logger.warn("feedtitle is: " + feedInfo + " , userid is: " + feedVo.getPostUser().getUserId() );
-        if ((StringUtils.isEmpty(feedInfo)) || (feedVo.getPostUser().getUserId() == null))  {
+        if ((StringUtils.isEmpty(feedInfo)) || (feedVo.getPostUser().getUserId() == null) ||
+                (Objects.isNull(feedVo.getPhotos())) || (feedVo.getPhotos().size() == 0))  {
             logger.warn("param warn : 参数为空");
             result = Response.paramIsNull();
             return result;
@@ -83,6 +84,9 @@ public class FeedServiceImpl implements FeedService {
         Long time = System.currentTimeMillis();
         tFeed.setCreateTime(time);
         tFeed.setUpdateTime(time);
+        tFeed.setFeedCover(feedVo.getPhotos().get(0).getUrl());
+        tFeed.setCoverHeight(feedVo.getPhotos().get(0).getPhotoHeight());
+        tFeed.setCoverWidth(feedVo.getPhotos().get(0).getPhotoWidth());
         tFeedMapper.insertSelective(tFeed);
 
         // 保存图片
@@ -92,6 +96,8 @@ public class FeedServiceImpl implements FeedService {
                 TFeedPhoto tFeedPhoto = new TFeedPhoto();
                 tFeedPhoto.setFeedId(tFeed.getId());
                 tFeedPhoto.setUrl(photoVo.getUrl());
+                tFeedPhoto.setPhotoHeight(photoVo.getPhotoHeight());
+                tFeedPhoto.setPhotoWidth(photoVo.getPhotoWidth());
                 tFeedPhoto.setState(Constants.PHOTOUNDEAL);
                 tFeedPhoto.setCreateTime(time);
                 tFeedPhoto.setUpdateTime(time);

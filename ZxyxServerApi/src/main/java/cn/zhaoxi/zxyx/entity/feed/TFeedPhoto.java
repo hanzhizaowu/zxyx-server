@@ -30,4 +30,10 @@ public class TFeedPhoto {
 
     @Column(name = "photoType")
     private Integer photoType;
+
+    @Column(name = "photoHeight")
+    private Integer photoHeight;
+
+    @Column(name = "photoWidth")
+    private Integer photoWidth;
 }

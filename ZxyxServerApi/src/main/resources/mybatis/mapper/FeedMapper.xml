@@ -9,10 +9,11 @@
     <result column="createTime" jdbcType="BIGINT" property="createTime" />
     <result column="updateTime" jdbcType="BIGINT" property="updateTime" />
       <result column="feedType" jdbcType="TINYINT" property="feedType" />
+    <result column="feedCover" jdbcType="VARCHAR" property="feedCover" />
+    <result column="coverHeight" jdbcType="SMALLINT" property="coverHeight" />
+    <result column="coverWidth" jdbcType="SMALLINT" property="coverWidth" />
     <!-- 用户信息 -->
     <association column="userId" property="postUser" select="selectUserById"/>
-    <!-- 动态相册 -->
-    <collection column="id" property="photos" select="selectFeedPhoto"/>
   </resultMap>
   <!-- 分页 -->
   <sql id="page_size">
@@ -28,7 +29,8 @@
 
   <!-- 动态列表 -->
   <select id="pageFeed" parameterType="map" resultMap="FeedMap">
-    SELECT f.id, f.feedTitle, f.feedDescription, f.userId, f.createTime, f.updateTime, f.feedType
+    SELECT f.id, f.feedTitle, f.feedDescription, f.userId, f.createTime, f.updateTime,
+        f.feedType, f.feedCover, f.coverHeight, f.coverWidth
     FROM t_feed f
     <where>
       f.userId = #{userId}
@@ -39,19 +41,6 @@
 
     ORDER BY f.createTime DESC
     <include refid="page_size"/>
-  </select>
-
-  <!-- 帖子文件部分 -->
-  <resultMap id="PhotoMap" type="cn.zhaoxi.zxyx.model.Photo">
-    <id column="id" jdbcType="BIGINT" property="photoId" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="photoType" jdbcType="TINYINT" property="photoType" />
-  </resultMap>
-
-  <select id="selectFeedPhoto" parameterType="Long" resultMap="PhotoMap">
-    SELECT id, url, photoType
-    FROM t_feed_photo
-    WHERE feedId = #{id}
   </select>
 
   <!-- 用户部分 -->

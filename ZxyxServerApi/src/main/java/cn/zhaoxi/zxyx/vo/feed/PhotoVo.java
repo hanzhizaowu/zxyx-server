@@ -19,9 +19,17 @@ public class PhotoVo implements Serializable {
 
     private Integer photoType;
 
+    private Integer photoHeight;
+
+    private Integer photoWidth;
+
     public PhotoVo() {}
 
-    public void setUrl(String  url) {
+    public void setAddUrl(String  url) {
         this.url = Constants.RSSURL + url;
+    }
+
+    public void setNoAddUrl(String url) {
+        this.url = url;
     }
 }

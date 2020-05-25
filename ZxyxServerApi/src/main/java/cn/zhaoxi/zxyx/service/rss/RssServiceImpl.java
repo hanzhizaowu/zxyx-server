@@ -7,6 +7,7 @@ import cn.zhaoxi.zxyx.util.ParamUtil;
 import cn.zhaoxi.zxyx.util.RssConfig;
 import cn.zhaoxi.zxyx.util.result.ExceptionMsg;
 import cn.zhaoxi.zxyx.util.result.Response;
+import cn.zhaoxi.zxyx.vo.feed.PhotoVo;
 import cn.zhaoxi.zxyx.vo.user.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -120,7 +123,7 @@ public class RssServiceImpl implements RssService {
         // 如：http://localhost:7070/rss/image/20180516001.png，此为完整访问路径
         // 或：/rss/image/20180516001.png，此为相对路径
         // 我们采用相对路径即typePath
-        List<String> urls = new ArrayList<>();
+        List<PhotoVo> photoVos = new ArrayList<>();
 
         // 上传目录
         String dirPath = rssConfig.getUploadPath() + typePath;
@@ -145,10 +148,23 @@ public class RssServiceImpl implements RssService {
             // 重命名文件
             fileName = ParamUtil.getUUID() + fileType;
             file = new File(dirPath + fileName);
+            Integer width;
+            Integer height;
 
             try {
                 // 保存文件
                 multipartFile.transferTo(file);
+
+                BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream()); // 通过MultipartFile得到InputStream，从而得到BufferedImage
+                if (bufferedImage == null) {
+                    // 证明上传的文件不是图片，获取图片流失败，不进行下面的操作
+                    logger.warn("buffer image error");
+                    result.setCodeAndMsg(ExceptionMsg.ParamIsNull.getCode(), "not picture");
+                    return result;
+                }
+                width = bufferedImage.getWidth();
+                height = bufferedImage.getHeight();
+
             } catch (IOException e) {
                 logger.warn("uploadFile : " + e.toString(), e);
                 result.setCodeAndMsg(ExceptionMsg.ParamIsNull.getCode(), "上传失败，error：" + e.toString());
@@ -157,10 +173,14 @@ public class RssServiceImpl implements RssService {
 
             // url
             String url = Constants.LOCALURL + typePath + fileName;
-            urls.add(url);
+            PhotoVo photoVo = new PhotoVo();
+            photoVo.setNoAddUrl(url);
+            photoVo.setPhotoHeight(height);
+            photoVo.setPhotoWidth(width);
+            photoVos.add(photoVo);
         }
 
-        result.setData(urls);
+        result.setData(photoVos);
         return result;
     }
 
