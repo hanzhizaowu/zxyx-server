@@ -1,8 +1,7 @@
 package cn.zhaoxi.zxyx.vo.user;
 
 import cn.zhaoxi.zxyx.entity.user.TUser;
-import cn.zhaoxi.zxyx.model.User;
-import cn.zhaoxi.zxyx.util.Constants;
+import cn.zhaoxi.zxyx.util.constant.Constants;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
@@ -26,6 +25,12 @@ public class UserVo implements Serializable {
     private String userSignature;
 
     public UserVo() {}
+
+    public UserVo(TUser tUser) {
+        userId = tUser.getUserId();
+        userName = tUser.getUserName();
+        userAvatar = tUser.getUserAvatar();
+    }
 
     public void setUserAvatar(String userAvatar) {
         this.userAvatar = Constants.RSSURL + userAvatar;

@@ -2,7 +2,7 @@ package cn.zhaoxi.zxyx.vo.feed;
 
 import cn.zhaoxi.zxyx.model.Feed;
 import cn.zhaoxi.zxyx.model.Photo;
-import cn.zhaoxi.zxyx.util.Constants;
+import cn.zhaoxi.zxyx.util.constant.Constants;
 import cn.zhaoxi.zxyx.vo.user.UserVo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -48,6 +48,8 @@ public class FeedVo implements Serializable {
 
     private Integer coverWidth;
 
+    private VideoVo video;
+
     public FeedVo() {}
 
     public FeedVo(Feed feed) {
@@ -60,6 +62,12 @@ public class FeedVo implements Serializable {
         this.feedCover = Constants.RSSURL + feed.getFeedCover();
         this.coverHeight = feed.getCoverHeight();
         this.coverWidth = feed.getCoverWidth();
+        if(!Objects.isNull(feed.getVideo())) {
+            VideoVo videoVo = new VideoVo();
+            BeanUtils.copyProperties(feed.getVideo(), videoVo);
+            videoVo.setAddUrl(videoVo.getVideoUrl());
+            video = videoVo;
+        }
 
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(feed.getPostUser(), userVo);

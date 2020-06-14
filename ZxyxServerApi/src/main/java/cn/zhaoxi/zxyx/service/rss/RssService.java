@@ -13,5 +13,7 @@ public interface RssService {
 
     Response uploadUserImage(MultipartFile file, Long userId);
 
-    Response uploadFeedImage(MultipartFile[] files);
+    Response uploadFeedImage(MultipartFile[] files, String userId);
+
+    Response uploadFeedVideo(MultipartFile[] files, String userId);
 }

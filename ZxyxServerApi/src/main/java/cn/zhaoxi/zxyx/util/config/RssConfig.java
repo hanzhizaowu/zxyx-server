@@ -1,4 +1,4 @@
-package cn.zhaoxi.zxyx.util;
+package cn.zhaoxi.zxyx.util.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,5 +36,12 @@ public class RssConfig {
      */
     public String getFeedImagePath() {
         return "image/";
+    }
+
+    /**
+     * 动态视频目录
+     */
+    public String getFeedVideoPath() {
+        return "video/";
     }
 }

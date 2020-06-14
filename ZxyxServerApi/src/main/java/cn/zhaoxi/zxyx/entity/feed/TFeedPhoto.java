@@ -28,9 +28,6 @@ public class TFeedPhoto {
     @Column(name = "updateTime")
     private Long updateTime;
 
-    @Column(name = "photoType")
-    private Integer photoType;
-
     @Column(name = "photoHeight")
     private Integer photoHeight;
 

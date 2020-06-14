@@ -5,6 +5,11 @@
     password: xx
     driver-class-name: com.mysql.jdbc.Driver
 
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 400MB
+
   # 静态资源
   resources:
     static-locations: classpath:web/

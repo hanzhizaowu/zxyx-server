@@ -1,6 +1,6 @@
 package cn.zhaoxi.zxyx.vo.feed;
 
-import cn.zhaoxi.zxyx.util.Constants;
+import cn.zhaoxi.zxyx.util.constant.Constants;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
@@ -16,8 +16,6 @@ public class PhotoVo implements Serializable {
     private Long photoId;
 
     private String url;
-
-    private Integer photoType;
 
     private Integer photoHeight;
 

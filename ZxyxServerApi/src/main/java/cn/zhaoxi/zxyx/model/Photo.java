@@ -9,6 +9,4 @@ public class Photo {
     private Long photoId;
 
     private String url;
-
-    private Integer photoType;
 }

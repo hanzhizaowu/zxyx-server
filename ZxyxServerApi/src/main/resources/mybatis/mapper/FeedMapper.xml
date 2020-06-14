@@ -14,6 +14,8 @@
     <result column="coverWidth" jdbcType="SMALLINT" property="coverWidth" />
     <!-- 用户信息 -->
     <association column="userId" property="postUser" select="selectUserById"/>
+    <!-- 视频信息 -->
+    <association column="id" property="video" select="selectVideoById"/>
   </resultMap>
   <!-- 分页 -->
   <sql id="page_size">
@@ -32,12 +34,20 @@
     SELECT f.id, f.feedTitle, f.feedDescription, f.userId, f.createTime, f.updateTime,
         f.feedType, f.feedCover, f.coverHeight, f.coverWidth
     FROM t_feed f
-    <where>
-      f.userId = #{userId}
-      <if test = "photoId gt 0">
-        and f.id > #{photoId}
-      </if>
-    </where>
+    WHERE
+    <choose>
+      <when test="feedType != null">
+        f.feedType = #{feedType}
+      </when>
+      <otherwise>
+        f.feedType = 0
+      </otherwise>
+    </choose>
+
+    and f.userId = #{userId}
+    <if test = "photoId gt 0">
+        and f.id &lt; #{photoId}
+    </if>
 
     ORDER BY f.createTime DESC
     <include refid="page_size"/>
@@ -57,4 +67,16 @@
     where id = #{id}
   </select>
 
+  <!-- 视频部分 -->
+  <resultMap id="VideoMap" type="cn.zhaoxi.zxyx.model.Video">
+    <id column="id" jdbcType="BIGINT" property="videoId" />
+    <result column="url" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="videoTime" jdbcType="INTEGER" property="videoTime" />
+  </resultMap>
+  <!-- 通过id查找用户 -->
+  <select id="selectVideoById" parameterType="Long" resultMap="VideoMap">
+    select id, url, videoTime
+    from t_feed_video
+    where feedId = #{id}
+  </select>
 </mapper>

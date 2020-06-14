@@ -27,4 +27,5 @@ public class Feed {
     private String feedCover;
     private Integer coverHeight;
     private Integer coverWidth;
+    private Video video;
 }

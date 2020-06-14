@@ -33,20 +33,23 @@ public class FeedController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType="form", name = "userId", dataType = "Long", value = "查询用户id", required = true),
             @ApiImplicitParam(paramType="form", name = "photoId", dataType = "Long", value = "帖子id阈值", defaultValue = "0"),
-            @ApiImplicitParam(paramType="form", name = "pageSize", dataType = "Integer", value = "页容量", defaultValue = "10")
+            @ApiImplicitParam(paramType="form", name = "pageSize", dataType = "Integer", value = "页容量", defaultValue = "10"),
+            @ApiImplicitParam(paramType="form", name = "feedType", dataType = "Integer", value = "帖子类型", defaultValue = "0")
     })
     @RequestMapping(value = "/page", method = RequestMethod.POST)
     public Response pageFeed(@RequestParam(name = "userId") Long userId,
                              @RequestParam(name = "photoId") Long photoId,
-                             @RequestParam(name = "pageSize") Integer pageSize) {
+                             @RequestParam(name = "pageSize") Integer pageSize,
+                             @RequestParam(name = "feedType") Integer feedType) {
 
         if (userId == null) {
             return Response.paramIsNull();
         }
 
-        logger.info("param userId is :" + userId + " ,photoId is:" + photoId + " , pageSize is:" + pageSize);
+        logger.info("param userId is :" + userId + " ,photoId is:" + photoId + " , pageSize is:" + pageSize +
+                "feedType is:" + feedType);
 
-        return feedService.pageFeed(userId, photoId, pageSize);
+        return feedService.pageFeed(userId, photoId, pageSize, feedType);
     }
 
     /**
